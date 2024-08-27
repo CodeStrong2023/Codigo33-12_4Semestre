@@ -54,7 +54,8 @@ _Una vez finalizado el código, el tester previamente establecido se encargara d
 * _Mira también la lista de [contribuidores](https://github.com/CodeStrong2023/Codigo33-12_4Semestre/graphs/contributors) que han participado en este proyecto._
 
 
-##Visualizaciones   
+## Visualizaciones   
+
 <p align="center"><img align="center" src="https://profile-counter.glitch.me/{Codigo33-12_4Semestre}/count.svg" /></p>
 
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=FFD700&height=120&section=footer"/>
