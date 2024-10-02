@@ -1,81 +1,104 @@
-body{
+body {
     text-align: center;
-    color: rgb(227, 15, 15);
-    background-image: url('/Avatar/fondo3.jpg');
-    height: 100vh;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    min-height: 100vh; /* Ocupa al menos toda la altura de la ventana */
+    color: #f8f7f7;
+    background-image: url('https://raw.githubusercontent.com/CodeStrong2023/Codigo33-12_4Semestre/refs/heads/main/Juego-Avatar-utn/Avatar/fongoang.jpg');
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-attachment: fixed; /* Hace que la imagen de fondo no se mueva al hacer scroll */
     font-family: "Mulish", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
     margin: 0;
     padding: 0;
-    ol{
-        text-align: justify;
-        list-style: none;
-        li{
-            list-style: none;
-            lu{
-                list-style: none;
-            }
-        }
-    }
-    h1{
-        font-family: "Bungee Tint", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-        font-size: 60px;
-    }
-    h4, h2{
-        font-family: "Rubik Mono One", monospace;
-        font-weight: 400;
-        font-style: normal;
-    }
-    button{
-        color: rgb(77, 2, 2);
-        background: rgb(255,255,255);
-        background: radial-gradient(circle, rgba(255,255,255,1) 0%, #d1405b 100%);
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-input[type="radio"] {
+ol {
+    color: #fcfbfb;
+    padding: 0 15px;
+    margin: 15px auto;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 500px;
+    text-align: justify;
+    list-style: none;
+}
+
+h1 {
+    color: #000;
+    font-family: "Bungee Tint", sans-serif;
+    font-weight: 400;
+    font-size: 45px;
+}
+
+h2 {
+    color: #080808;
+    font-family: "Rubik Mono One", monospace;
+    font-weight: 400;
+}
+
+h4 {
+    color: #fffbfb;
+    font-family: "Rubik Mono One", monospace;
+    font-weight: 400;
+}
+
+button {
+    color: rgb(0, 0, 0);
+    background: rgba(255, 255, 255, 0.5);
+    height: 40px;
+    border-radius: 30px;
+    font-size: 1rem;
+    padding: 8px 16px;
+    margin-top: 5px;
+}
+
+input {
     display: none;
 }
 
 .imagen-personaje {
-    border: 5px solid #000;
-    border-radius: 10px;    
-    padding: 5px;            
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-.imagen-personaje {
-    width: 100px; /* Ajusta el tamaño según tu diseño */
-    height: auto;
+    width: 100%; /* Ajusta al 100% del contenedor */
+    max-width: 180px; /* Incremento el tamaño para móviles */
+    height: auto; /* Mantiene la proporción */
     display: block;
-    margin: 10px auto;
     cursor: pointer;
-    transition: 0,2s;
+    transition: transform 0.2s ease-in-out;
+    margin: 10px auto;
 }
 
-.imagen-personaje:hover{
+.imagen-personaje:hover,
+.imagen-personaje:active {
     transform: scale(1.1);
-}
-
-.seleccionar-personaje {
-    display: flex; /* Esto alinea los elementos en una fila */
-    justify-content: space-around; /* Espacio uniforme entre los elementos */
-    align-items: center; /* Alinea verticalmente los elementos al centro */
+    border-color: white;
 }
 
 .seleccionar-personaje label {
-    text-align: center; /* Centra el texto debajo de cada imagen */
-    margin: 0 auto 10px auto; /* Espaciado entre los elementos */
+    margin: 0;
+    padding: 0;
 }
 
+.personajes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Consultas de medios */
 @media only screen and (max-width: 768px) {
+    body {
+        background-image: url('https://i.pinimg.com/originals/13/fd/49/13fd494ebd9865e4923340e812432031.jpg');
+    }
+
     h1 {
         font-size: 2.5rem;
     }
@@ -84,8 +107,12 @@ input[type="radio"] {
         font-size: 1.5rem;
     }
 
-    .imagen-personaje {
-        width: 80px;
+    .personajes {
+        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+        gap: 10px; /* Espaciado entre imágenes */
+        margin: 0 auto; /* Centrado en móviles */
     }
 
     button {
@@ -95,21 +122,36 @@ input[type="radio"] {
 }
 
 @media only screen and (max-width: 480px) {
+    body {
+        background-image: url('https://i.pinimg.com/originals/13/fd/49/13fd494ebd9865e4923340e812432031.jpg');
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Cambié a flex-start para permitir el scroll si es necesario */
+        background-attachment: fixed; /* Asegura que el fondo esté fijo */
+    }
+
     h1 {
-        font-size: 2rem;
+        font-size: 2.2rem; /* Incrementé un poco el tamaño */
     }
 
     h2, h4 {
-        font-size: 1.2rem;
+        font-size: 1.4rem; /* Ajustado para mayor legibilidad */
+    }
+
+    .personajes {
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+        gap: 15px; /* Más espaciado entre imágenes */
+        margin: 0 auto; /* Centrado en pantallas pequeñas */
     }
 
     .imagen-personaje {
-        width: 60px;
+        max-width: 160px; /* Aumenté el tamaño para pantallas pequeñas */
     }
 
     button {
-        font-size: 0.9rem;
-        padding: 6px 12px;
+        font-size: 1rem; /* Ajusté para que sea más visible */
+        padding: 8px 16px;
     }
 
     section {
