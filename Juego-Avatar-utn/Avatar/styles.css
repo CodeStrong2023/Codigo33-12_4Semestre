@@ -68,7 +68,7 @@ input {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     width: 100%; /* Ajusta al 100% del contenedor */
     max-width: 180px; /* Incremento el tamaño para móviles */
-    height: auto; /* Mantiene la proporción */
+    height: 270px; /* Mantiene la proporción */
     display: block;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
@@ -96,15 +96,18 @@ input {
 /* Consultas de medios */
 @media only screen and (max-width: 768px) {
     body {
+        color: #f8f7f7;
         background-image: url('https://i.pinimg.com/originals/13/fd/49/13fd494ebd9865e4923340e812432031.jpg');
     }
 
     h1 {
         font-size: 2.5rem;
+        color: #f8f7f7;
     }
 
     h2, h4 {
         font-size: 1.5rem;
+        color: #f8f7f7;
     }
 
     .personajes {
@@ -123,6 +126,7 @@ input {
 
 @media only screen and (max-width: 480px) {
     body {
+        color: #f8f7f7;
         background-image: url('https://i.pinimg.com/originals/13/fd/49/13fd494ebd9865e4923340e812432031.jpg');
         min-height: 100vh;
         display: flex;
@@ -133,10 +137,12 @@ input {
 
     h1 {
         font-size: 2.2rem; /* Incrementé un poco el tamaño */
+        color: #f8f7f7;
     }
 
     h2, h4 {
         font-size: 1.4rem; /* Ajustado para mayor legibilidad */
+        
     }
 
     .personajes {

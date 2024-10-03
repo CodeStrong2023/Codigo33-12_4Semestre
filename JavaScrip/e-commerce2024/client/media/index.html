@@ -8,15 +8,18 @@
     <title>Pago con Mercado Pago</title>
 </head>
 <body>
-    <!--shop content-->
+    <!--Shop content-->
     <div class="card-products-container">
         <div class="card-products" id="shopContent"></div>
     </div>
-    <!--cart btn-->
+    
+    <!--Cart button-->
     <div class="cart-btn" id="cart-btn">🛒</div>
-    <!--cart counter-->
+    
+    <!--Cart counter-->
     <span class="cart-counter" id="cart-counter">0</span>
-    <!--modal-->
+    
+    <!--Modal-->
     <div class="modal-overlay" id="modal-overlay"></div>
     <div class="modal-container" id="modal-container"></div>
 
@@ -27,43 +30,34 @@
     <script src="../js/index.js"></script>
     <script src="../js/cart.js"></script>
 
-    <!--Inicializacion del widget de Mercado Pago-->
+    <!--Inicialización del widget de Mercado Pago-->
     <script>
-        const mp = new MercadoPago("YOUR_PUBLIC_KEY", {
-            locale: 'es-AR'
+        const mp = new MercadoPago("qatest6730", { // Inicializa el SDK
+            locale: "es-AR"
         });
 
-        // Funcion para crear la preferencia de pago
-        const setupPayment = async () => {
-            try {
-                const response = await fetch('/create_preference', {
-                    method: "POST",
-                    headers: {
-                        "content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        description: "Tu producto",
-                        price: 2000,
-                        quanty: 1
-                    })
-                });
+        // Ejemplo de cómo obtener métodos de pago
+        mp.paymentMethods.search({
+            public_key: "qatest6730" // Usa tu clave pública
+        }).then(function (response) {
+            console.log("Métodos de pago:", response);
+        }).catch(function (error) {
+            console.error("Error al obtener métodos de pago:", error);
+        });
 
-                const data = await response.json();
-                const preferenceId = data.id;
-
-                //Configura el brick de wallet
-                mp.bricks().create("wallet", "#wallet_container", {
-                    initialization: {
-                        preferenceId: preferenceId,
-                    },
-                });
-            }catch (error) {
-                console.error("Error al obtener la preferencia:", error);
-            }
-        };
-
-        // Ejecuta la funcion cuando el documento este listo
-        document.addEventListener("DOMContentLoaded", setupPayment);
+        // Configura el botón de pago
+        const buttonCheckout = document.getElementById("button-checkout");
+        buttonCheckout.addEventListener("click", function () {
+            mp.checkout({
+                preference: {
+                    id: "123" // Reemplaza con el ID de preferencia
+                },
+                render: {
+                    container: "#button-checkout",
+                    label: "Pagar"
+                },
+            });
+        });
     </script>
 </body>
 </html>
