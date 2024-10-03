@@ -1,157 +1,154 @@
-class Personaje {
-    constructor(nombre, vidas = 3) {
-        this.nombre = nombre;
-        this.vidas = vidas;
-    }
-
-    recibirAtaque() {
-        this.vidas--;
-    }
-
-    estaVivo() {
-        return this.vidas > 0;
-    }
-}
-
 class Juego {
     constructor() {
-        this.jugador = null;
-        this.enemigo = null;
         this.ataqueJugador = null;
         this.ataqueEnemigo = null;
-        this.personajesDisponibles = ['Zuko', 'Katara', 'Aang', 'Toph', 'Iroh']; // Incluí a Iroh
+        this.vidasJugador = 3;
+        this.vidasEnemigo = 3;
+        this.personajesDisponibles = ['Zuko', 'Katara', 'Aang', 'Toph', 'Iroh'];
+        this.iniciarJuego();
     }
 
     iniciarJuego() {
         document.getElementById('seleccionar-ataque').style.display = 'none';
         document.getElementById('reiniciar').style.display = 'none';
-        document.getElementById("reglas-del-juego").style.display = "none";
-        document.getElementById('boton-personaje').addEventListener('click', () => this.seleccionarPersonajeJugador());
-        document.getElementById('boton-reglas').addEventListener('click', this.mostrarReglas);
-        document.getElementById('boton-jugar').style.display = 'none';
-        document.getElementById('seleccionar-personaje').style.display = 'block';
+        document.getElementById('reglas-del-juego').style.display = 'none';
 
-        document.getElementById('boton-punio').addEventListener('click', () => this.elegirAtaque('Puño'));
-        document.getElementById('boton-patada').addEventListener('click', () => this.elegirAtaque('Patada'));
-        document.getElementById('boton-barrida').addEventListener('click', () => this.elegirAtaque('Barrida'));
-        document.getElementById('boton-reiniciar').addEventListener('click', this.reiniciarJuego);
-    }
+        let botonPersonajeJugador = document.getElementById('boton-personaje');
+        botonPersonajeJugador.addEventListener('click', () => this.seleccionarPersonajeJugador());
 
-    mostrarReglas() {
-        document.getElementById("reglas-del-juego").style.display = "block";
-        document.getElementById('boton-jugar').style.display = 'block';
-        document.getElementById('boton-reglas').style.display = 'none';
-        document.getElementById('seleccionar-personaje').style.display = 'none';
+        let botonPunio = document.getElementById('boton-punio');
+        botonPunio.addEventListener('click', () => this.ataque('Punio'));
+
+        let botonPatada = document.getElementById('boton-patada');
+        botonPatada.addEventListener('click', () => this.ataque('Patada'));
+
+        let botonBarrida = document.getElementById('boton-barrida');
+        botonBarrida.addEventListener('click', () => this.ataque('Barrida'));
+
+        let botonReiniciar = document.getElementById('boton-reiniciar');
+        botonReiniciar.addEventListener('click', () => this.reiniciarJuego());
+
+        document.getElementById('boton-reglas').addEventListener('click', () => this.mostrarReglas());
+
         document.getElementById('boton-jugar').addEventListener('click', () => this.seleccionarPersonajeJugador());
     }
 
-    seleccionarPersonajeJugador() {
-        const personajes = {
-            'zuko': 'Zuko',
-            'katara': 'Katara',
-            'aang': 'Aang',
-            'toph': 'Toph',
-            'iroh': 'Iroh' // Añadido Iroh
-        };
-
-        let personajeSeleccionado = null;
-        for (let key in personajes) {
-            let inputPersonaje = document.getElementById(key);
-            if (inputPersonaje.checked) {
-                personajeSeleccionado = personajes[key];
-                break;
-            }
-        }
-
-        if (personajeSeleccionado) {
-            this.jugador = new Personaje(personajeSeleccionado);
-            document.getElementById('personaje-jugador').innerHTML = personajeSeleccionado;
-            this.seleccionarPersonajeEnemigo();
-        } else {
-            this.mostrarError('Selecciona un personaje');
-        }
+    mostrarReglas() {
+        document.getElementById('reglas-del-juego').style.display = 'block';
+        document.getElementById('seleccionar-personaje').style.display = 'none';
+        document.getElementById('boton-reglas').style.display = 'none';
+        document.getElementById('boton-jugar').style.display = 'block';
     }
 
-    seleccionarPersonajeEnemigo() {
-        const enemigoAleatorio = this.personajesDisponibles[this.aleatorio(0, this.personajesDisponibles.length - 1)];
-        this.enemigo = new Personaje(enemigoAleatorio);
-        document.getElementById('personaje-enemigo').innerHTML = enemigoAleatorio;
+    seleccionarPersonajeJugador() {
+        document.getElementById('reglas-del-juego').style.display = 'none';
+        document.getElementById('seleccionar-personaje').style.display = 'block';
+
+        let inputZuko = document.getElementById('zuko');
+        let inputKatara = document.getElementById('katara');
+        let inputAang = document.getElementById('aang');
+        let inputToph = document.getElementById('toph');
+        let spanPersonajeJugador = document.getElementById('personaje-jugador');
+
+        if (inputZuko.checked) {
+            spanPersonajeJugador.innerHTML = 'Zuko';
+        } else if (inputKatara.checked) {
+            spanPersonajeJugador.innerHTML = 'Katara';
+        } else if (inputAang.checked) {
+            spanPersonajeJugador.innerHTML = 'Aang';
+        } else if (inputToph.checked) {
+            spanPersonajeJugador.innerHTML = 'Toph';
+        } else {
+            this.mostrarMensajeError('Selecciona un personaje');
+            return;
+        }
+
+        this.seleccionarPersonajeEnemigo();
         document.getElementById('seleccionar-ataque').style.display = 'block';
         document.getElementById('seleccionar-personaje').style.display = 'none';
     }
 
-    elegirAtaque(ataque) {
-        this.ataqueJugador = ataque;
-        this.ataqueAleatorioEnemigo();
+    mostrarMensajeError(mensaje) {
+        let sectionSeleccionarPersonaje = document.getElementById('seleccionar-personaje');
+        let mensajeError = document.createElement('p');
+        mensajeError.innerHTML = mensaje;
+        mensajeError.style.color = 'red';
+
+        sectionSeleccionarPersonaje.appendChild(mensajeError);
+
+        setTimeout(() => {
+            sectionSeleccionarPersonaje.removeChild(mensajeError);
+        }, 2000);
+    }
+
+    seleccionarPersonajeEnemigo() {
+        let personajeAleatorio = this.aleatorio(1, this.personajesDisponibles.length);
+        let spanPersonajeEnemigo = document.getElementById('personaje-enemigo');
+        spanPersonajeEnemigo.innerHTML = this.personajesDisponibles[personajeAleatorio - 1];
+    }
+
+    ataque(tipoAtaque) {
+        this.ataqueJugador = tipoAtaque;
+        this.ataqueEnemigo = this.generarAtaqueEnemigo();
         this.combate();
     }
 
-    ataqueAleatorioEnemigo() {
-        const ataques = ['Puño', 'Patada', 'Barrida'];
-        this.ataqueEnemigo = ataques[this.aleatorio(0, ataques.length - 1)];
+    generarAtaqueEnemigo() {
+        let ataqueAleatorio = this.aleatorio(1, 3);
+        return ataqueAleatorio === 1 ? 'Punio' : ataqueAleatorio === 2 ? 'Patada' : 'Barrida';
     }
 
     combate() {
-        let resultado;
+        let spanVidasJugador = document.getElementById('vidas-jugador');
+        let spanVidasEnemigo = document.getElementById('vidas-enemigo');
+
         if (this.ataqueEnemigo === this.ataqueJugador) {
-            resultado = "EMPATE";
+            this.crearMensaje('EMPATE');
         } else if (
-            (this.ataqueJugador === 'Puño' && this.ataqueEnemigo === 'Barrida') ||
-            (this.ataqueJugador === 'Patada' && this.ataqueEnemigo === 'Puño') ||
+            (this.ataqueJugador === 'Punio' && this.ataqueEnemigo === 'Barrida') ||
+            (this.ataqueJugador === 'Patada' && this.ataqueEnemigo === 'Punio') ||
             (this.ataqueJugador === 'Barrida' && this.ataqueEnemigo === 'Patada')
         ) {
-            resultado = "GANASTE";
-            this.enemigo.recibirAtaque();
+            this.crearMensaje('GANASTE');
+            this.vidasEnemigo--;
+            spanVidasEnemigo.innerHTML = this.vidasEnemigo;
         } else {
-            resultado = "PERDISTE";
-            this.jugador.recibirAtaque();
+            this.crearMensaje('PERDISTE');
+            this.vidasJugador--;
+            spanVidasJugador.innerHTML = this.vidasJugador;
         }
 
-        this.crearMensaje(`Tu personaje atacó con ${this.ataqueJugador}, el enemigo atacó con ${this.ataqueEnemigo}. ${resultado}`);
-        this.actualizarVidas();
         this.revisarVidas();
     }
 
-    actualizarVidas() {
-        document.getElementById('vidas-jugador').innerHTML = this.jugador.vidas;
-        document.getElementById('vidas-enemigo').innerHTML = this.enemigo.vidas;
-    }
-
     revisarVidas() {
-        if (!this.enemigo.estaVivo()) {
-            this.crearMensajeFinal("FELICITACIONES!!! HAS GANADO 🤩🥳🎉");
-            this.deshabilitarBotones();
-        } else if (!this.jugador.estaVivo()) {
-            this.crearMensajeFinal("QUE PENA, HAS PERDIDO 😢😭😭😭");
-            this.deshabilitarBotones();
+        if (this.vidasEnemigo === 0) {
+            this.crearMensajeFinal('FELICITACIONES!!! HAS GANADO 🤩🥳🎉');
+        } else if (this.vidasJugador === 0) {
+            this.crearMensajeFinal('QUE PENA, HAS PERDIDO 😢😭😭😭');
         }
     }
 
-    crearMensaje(mensaje) {
-        const sectionMensaje = document.getElementById('mensajes');
-        const parrafo = document.createElement('p');
-        parrafo.innerHTML = mensaje;
+    crearMensaje(resultado) {
+        let sectionMensaje = document.getElementById('mensajes');
+        let parrafo = document.createElement('p');
+        parrafo.innerHTML = `Tu personaje atacó con ${this.ataqueJugador}, el enemigo atacó con ${this.ataqueEnemigo}. ${resultado}`;
         sectionMensaje.appendChild(parrafo);
     }
 
-    crearMensajeFinal(mensaje) {
-        this.crearMensaje(mensaje);
-        document.getElementById('reiniciar').style.display = 'block';
-    }
+    crearMensajeFinal(resultado) {
+        let sectionReiniciar = document.getElementById('reiniciar');
+        sectionReiniciar.style.display = 'block';
 
-    deshabilitarBotones() {
+        let sectionMensaje = document.getElementById('mensajes');
+        let parrafo = document.createElement('p');
+        parrafo.innerHTML = resultado;
+
+        sectionMensaje.appendChild(parrafo);
+
         document.getElementById('boton-punio').disabled = true;
         document.getElementById('boton-patada').disabled = true;
         document.getElementById('boton-barrida').disabled = true;
-    }
-
-    mostrarError(mensaje) {
-        const sectionPersonaje = document.getElementById('seleccionar-personaje');
-        const mensajeError = document.createElement('p');
-        mensajeError.innerHTML = mensaje;
-        mensajeError.style.color = 'red';
-        sectionPersonaje.appendChild(mensajeError);
-        setTimeout(() => sectionPersonaje.removeChild(mensajeError), 2000);
     }
 
     reiniciarJuego() {
@@ -163,7 +160,5 @@ class Juego {
     }
 }
 
-window.addEventListener('load', () => {
-    const juego = new Juego();
-    juego.iniciarJuego();
-});
+window.addEventListener('load', () => new Juego());
+
