@@ -23,6 +23,9 @@ _A continuación encontrara los link a cada carpeta:_
 * [JavaScript](https://github.com/CodeStrong2023/Codigo33-12_4Semestre/tree/main/JavaScrip)
 * [Java](https://github.com/CodeStrong2023/Codigo33-12_4Semestre/tree/main/JAVA)
 * [Python](https://github.com/CodeStrong2023/Codigo33-12_4Semestre/tree/main/Python)
+* [Node](https://github.com/CodeStrong2023/Codigo33-12_4Semestre/tree/main/Node)
+* [Juego-Avatar-utn](https://github.com/CodeStrong2023/Codigo33-12_4Semestre/tree/main/Juego-Avatar-utn)
+* [Python en entorno profesional](https://github.com/Gianella-A-Achetoni/python_project)
 
 ## Construido con 🛠️
 
