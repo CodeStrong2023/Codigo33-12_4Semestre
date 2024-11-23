@@ -1,0 +1,182 @@
+// Variables
+$primary-color: #0d3b66;
+$secondary-color: #fff;
+$font-color: #333;
+$hover-scale: 1.05;
+$border-radius: 10px;
+$shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin card-style {
+  background-color: $secondary-color;
+  padding: 20px;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
+  color: $font-color;
+}
+
+header {
+  background-color: $primary-color;
+  color: $secondary-color;
+  padding: 20px;
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    font-size: 3rem;
+  }
+}
+
+h2 {
+  text-align: center;
+  color: $primary-color;
+  margin-top: 40px;
+}
+
+// Sección de imágenes generales
+#imagenes-generales {
+  .imagenes-container {
+    @include flex-center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .imagen-personaje {
+    width: 250px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale($hover-scale);
+    }
+  }
+}
+
+// Sección de personajes
+#personajes {
+  margin-top: 40px;
+  padding: 20px;
+
+  .personaje {
+    @include card-style;
+    margin: 20px 0;
+
+    img {
+      width: 200px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: $border-radius;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      color: $primary-color;
+      margin: 10px 0;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    &:hover {
+      transform: scale($hover-scale);
+    }
+  }
+}
+
+// Footer
+footer {
+  background-color: $primary-color;
+  color: $secondary-color;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+// Media Queries
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2.5rem;
+  }
+
+  #imagenes-generales .imagenes-container {
+    @include flex-center;
+  }
+
+  #imagenes-generales .imagen-personaje {
+    width: 200px;
+    height: 280px;
+  }
+
+  #personajes .personaje {
+    padding: 15px;
+    margin: 15px 0;
+  }
+
+  #personajes .personaje img {
+    width: 150px;
+    height: 220px;
+  }
+
+  #personajes .personaje h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  #imagenes-generales .imagenes-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #imagenes-generales .imagen-personaje {
+    width: 180px;
+    height: 250px;
+  }
+
+  #personajes .personaje {
+    padding: 10px;
+    margin: 10px 0;
+  }
+
+  #personajes .personaje img {
+    width: 120px;
+    height: 180px;
+  }
+
+  #personajes .personaje h3 {
+    font-size: 1.2rem;
+  }
+
+  #personajes .personaje p {
+    font-size: 0.9rem;
+  }
+}
